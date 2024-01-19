@@ -25,7 +25,12 @@ def print_success(message):
 
 def choose_word(punctuations=False, words_file="words.txt"):
     try:
-        line_number = random.randint(3, 253370)
+        lines = 0
+        with open(words_file) as f:
+            for _ in f:
+                lines = lines + 1
+
+        line_number = random.randint(1, lines)
         word = linecache.getline(words_file, line_number).strip(" \n\t\r")
         print(words_file)
 
@@ -49,18 +54,23 @@ def display_word(word, guessed_letters):
     return display
 
 
-def hangman(punctuations, words_file):
+def hangman(punctuations, words_file, caseSensitive):
     secret_word = choose_word(punctuations, words_file)
+    unCasedSecret = secret_word
     guessed_letters = []
     attempts = random.randint(3, 9)
 
+    secret_word = secret_word.lower()
     while attempts > 0:
         current_display = display_word(secret_word, guessed_letters)
         print("Current word:", current_display)
         print("Guessed letters:", guessed_letters)
         print("Attempts left:", attempts)
 
+
         guess = input("Guess a letter: ").lower()
+        if not caseSensitive:
+            guess = guess.lower()
 
         if guess.isalpha() and len(guess) == 1:
             if guess in guessed_letters:
@@ -76,9 +86,9 @@ def hangman(punctuations, words_file):
             print("Please enter a valid single letter.")
 
         if "_" not in display_word(secret_word, guessed_letters):
-            return True, secret_word
+            return True, unCasedSecret
 
-    return False, secret_word
+    return False, unCasedSecret
 
 
 def file_on_line(directory=os.path.expanduser("~")) -> str:
@@ -144,6 +154,9 @@ if __name__ == "__main__":
         action="store_true",
         help="Remove/Hang the file (Permanent data loss)",
     )
+    parser.add_argument("-c", "--case", default=False,
+            action="store_true",
+            help="Don't make the game case insensitive",)
 
     args = parser.parse_args()
 
@@ -164,7 +177,7 @@ if __name__ == "__main__":
     )
     print_info(f"Remember, '{hang_file}' will be hanged if you lose!")
 
-    res, secret = hangman(args.punctuation, args.file)
+    res, secret = hangman(args.punctuation, args.file, args.case)
     if res:
         print_success(f"You got it! '{hang_file}' {secret} is spared from the rope!")
     else:
