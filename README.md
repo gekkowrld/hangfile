@@ -1,6 +1,9 @@
 # HangFile
 
-HangFile is a command-line game inspired by the concept of [Suicide Linux](https://qntm.org/suicide), where a random file is removed whenever the player makes a mistake. The game adds an element of risk to mundane tasks, creating an engaging and unpredictable experience.
+HangFile is a command-line game inspired by the concept of [Suicide Linux](https://qntm.org/suicide), where a random file is removed whenever the player makes a mistake.
+
+The odds of you losing are high ~ 200000:1.
+Should be fun though!
 
 ## Features
 
@@ -42,4 +45,6 @@ Use this tool with extreme caution. The author takes no responsibility for any d
 **Note:** This is a high-risk game, and users are advised not to play it if they are not comfortable with potential data loss.
 
 Enjoy the thrill, but play responsibly (its your files after all)!
+
+[LICENSE](./LICENSE)
 
