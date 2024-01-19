@@ -15,7 +15,7 @@ RESET = "\033[0m"
 def print_warning(message):
     """
 
-    :param message:
+    :param message: The message to be displayed
 
     """
     print(f"{RED}Warning: {message}{RESET}")
@@ -24,7 +24,7 @@ def print_warning(message):
 def print_info(message):
     """
 
-    :param message:
+    :param message: The message to be displayed
 
     """
     print(f"{YELLOW}Info: {message}{RESET}")
@@ -33,7 +33,7 @@ def print_info(message):
 def print_success(message):
     """
 
-    :param message:
+    :param message: The message to be displayed
 
     """
     print(f"{GREEN}Success: {message}{RESET}")
@@ -69,8 +69,8 @@ def choose_word(punctuations=False, words_file="words.txt"):
 def display_word(word, guessed_letters):
     """
 
-    :param word:
-    :param guessed_letters:
+    :param word: The secret to be displayed
+    :param guessed_letters: The user input
 
     """
     display = ""
@@ -85,9 +85,9 @@ def display_word(word, guessed_letters):
 def hangman(punctuations, words_file, caseSensitive):
     """
 
-    :param punctuations:
-    :param words_file:
-    :param caseSensitive:
+    :param punctuations: Choose if punctuations should be removed or not
+    :param words_file: Choose which file to get the files from
+    :param caseSensitive: Choose if the input (and secret word) should be case insensitive or not
 
     """
     secret_word = choose_word(punctuations, words_file)
@@ -159,7 +159,7 @@ def file_on_line(directory=os.path.expanduser("~")) -> str:
 def hang_the_file(filelocation):
     """
 
-    :param filelocation:
+    :param filelocation: The path where the file is stored
 
     """
     try:
