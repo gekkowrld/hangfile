@@ -20,6 +20,7 @@ Should be fun though!
    - Navigate to the directory where the repository is cloned.
    - Ensure you have Python installed (`python3`).
    - Customize the game by modifying command-line arguments (optional).
+   - Download the "words.txt". You can get a sample from [this gist with sample words](https://gist.github.com/energizee/02eafbc2e760c5cb0b816f780033b75e) 
 
 3. **Run the Game:**
    - Open a terminal and run the game using the command:
