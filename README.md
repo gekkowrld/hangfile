@@ -14,14 +14,18 @@ Should be fun though!
 ## How to Play
 
 1. **Installation:**
+
    - Clone this repository to your local machine.
 
 2. **Setup:**
+
    - Navigate to the directory where the repository is cloned.
    - Ensure you have Python installed (`python3`).
    - Customize the game by modifying command-line arguments (optional).
+   - Download the "words.txt". You can get a sample from [this gist with sample words](https://gist.github.com/energizee/02eafbc2e760c5cb0b816f780033b75e)
 
 3. **Run the Game:**
+
    - Open a terminal and run the game using the command:
      ```bash
      python3 play.py
@@ -47,4 +51,3 @@ Use this tool with extreme caution. The author takes no responsibility for any d
 Enjoy the thrill, but play responsibly (its your files after all)!
 
 [LICENSE](./LICENSE)
-
