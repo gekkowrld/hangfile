@@ -3,7 +3,8 @@ import linecache
 import os
 import random
 import string
-from os.path import expanduser, expandvars
+from os.path import expanduser
+from os.path import expandvars
 
 RED = "\033[91m"
 YELLOW = "\033[93m"
@@ -12,18 +13,39 @@ RESET = "\033[0m"
 
 
 def print_warning(message):
+    """
+
+    :param message:
+
+    """
     print(f"{RED}Warning: {message}{RESET}")
 
 
 def print_info(message):
+    """
+
+    :param message:
+
+    """
     print(f"{YELLOW}Info: {message}{RESET}")
 
 
 def print_success(message):
+    """
+
+    :param message:
+
+    """
     print(f"{GREEN}Success: {message}{RESET}")
 
 
 def choose_word(punctuations=False, words_file="words.txt"):
+    """
+
+    :param punctuations:  (Default value = False)
+    :param words_file:  (Default value = "words.txt")
+
+    """
     try:
         lines = 0
         with open(words_file) as f:
@@ -45,6 +67,12 @@ def choose_word(punctuations=False, words_file="words.txt"):
 
 
 def display_word(word, guessed_letters):
+    """
+
+    :param word:
+    :param guessed_letters:
+
+    """
     display = ""
     for letter in word:
         if letter in guessed_letters:
@@ -55,6 +83,13 @@ def display_word(word, guessed_letters):
 
 
 def hangman(punctuations, words_file, caseSensitive):
+    """
+
+    :param punctuations:
+    :param words_file:
+    :param caseSensitive:
+
+    """
     secret_word = choose_word(punctuations, words_file)
     unCasedSecret = secret_word
     guessed_letters = []
@@ -66,7 +101,6 @@ def hangman(punctuations, words_file, caseSensitive):
         print("Current word:", current_display)
         print("Guessed letters:", guessed_letters)
         print("Attempts left:", attempts)
-
 
         guess = input("Guess a letter: ").lower()
         if not caseSensitive:
@@ -92,6 +126,11 @@ def hangman(punctuations, words_file, caseSensitive):
 
 
 def file_on_line(directory=os.path.expanduser("~")) -> str:
+    """
+
+    :param directory:  (Default value = os.path.expanduser("~"))
+
+    """
     directory = os.path.abspath(directory)
     while True:
         try:
@@ -111,12 +150,18 @@ def file_on_line(directory=os.path.expanduser("~")) -> str:
             else:
                 return ""
         except PermissionError:
-            print_warning("Error: Permission denied while accessing the directory.")
+            print_warning(
+                "Error: Permission denied while accessing the directory.")
             exit(1)
 
 
 # Use with caution!
 def hang_the_file(filelocation):
+    """
+
+    :param filelocation:
+
+    """
     try:
         os.remove(filelocation)
         print(f"Hanged {filelocation}!")
@@ -126,8 +171,7 @@ def hang_the_file(filelocation):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="HangFile is a fun game that hangs your file if you lose"
-    )
+        description="HangFile is a fun game that hangs your file if you lose")
     parser.add_argument(
         "-p",
         "--punctuation",
@@ -154,9 +198,13 @@ if __name__ == "__main__":
         action="store_true",
         help="Remove/Hang the file (Permanent data loss)",
     )
-    parser.add_argument("-c", "--case", default=False,
-            action="store_true",
-            help="Don't make the game case insensitive",)
+    parser.add_argument(
+        "-c",
+        "--case",
+        default=False,
+        action="store_true",
+        help="Don't make the game case insensitive",
+    )
 
     args = parser.parse_args()
 
@@ -165,9 +213,9 @@ if __name__ == "__main__":
         exit(1)
 
     if args.directory and not os.path.isdir(expandvars(args.directory)):
-        print_warning(
-            (f"Error: Specified directory '{expandvars(args.directory)}' not found")
-        )
+        print_warning((
+            f"Error: Specified directory '{expandvars(args.directory)}' not found"
+        ))
         exit(1)
 
     hang_file = file_on_line(expandvars(args.directory))
@@ -179,7 +227,8 @@ if __name__ == "__main__":
 
     res, secret = hangman(args.punctuation, args.file, args.case)
     if res:
-        print_success(f"You got it! '{hang_file}' {secret} is spared from the rope!")
+        print_success(
+            f"You got it! '{hang_file}' {secret} is spared from the rope!")
     else:
         print_warning(
             f"Sorry to announce that the word was '{secret}' and '{hang_file}' will face the rope!"
