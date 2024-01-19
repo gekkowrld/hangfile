@@ -3,7 +3,8 @@ import linecache
 import os
 import random
 import string
-from os.path import expanduser, expandvars
+from os.path import expanduser
+from os.path import expandvars
 
 RED = "\033[91m"
 YELLOW = "\033[93m"
@@ -12,20 +13,46 @@ RESET = "\033[0m"
 
 
 def print_warning(message):
+    """
+
+    :param message: The message to be displayed
+
+    """
     print(f"{RED}Warning: {message}{RESET}")
 
 
 def print_info(message):
+    """
+
+    :param message: The message to be displayed
+
+    """
     print(f"{YELLOW}Info: {message}{RESET}")
 
 
 def print_success(message):
+    """
+
+    :param message: The message to be displayed
+
+    """
     print(f"{GREEN}Success: {message}{RESET}")
 
 
 def choose_word(punctuations=False, words_file="words.txt"):
+    """
+
+    :param punctuations: Default value = False)
+    :param words_file: Default value = "words.txt")
+
+    """
     try:
-        line_number = random.randint(3, 253370)
+        lines = 0
+        with open(words_file) as f:
+            for _ in f:
+                lines = lines + 1
+
+        line_number = random.randint(1, lines)
         word = linecache.getline(words_file, line_number).strip(" \n\t\r")
         print(words_file)
 
@@ -40,6 +67,12 @@ def choose_word(punctuations=False, words_file="words.txt"):
 
 
 def display_word(word, guessed_letters):
+    """
+
+    :param word: The secret to be displayed
+    :param guessed_letters: The user input
+
+    """
     display = ""
     for letter in word:
         if letter in guessed_letters:
@@ -49,11 +82,20 @@ def display_word(word, guessed_letters):
     return display
 
 
-def hangman(punctuations, words_file):
+def hangman(punctuations, words_file, caseSensitive):
+    """
+
+    :param punctuations: Choose if punctuations should be removed or not
+    :param words_file: Choose which file to get the files from
+    :param caseSensitive: Choose if the input (and secret word) should be case insensitive or not
+
+    """
     secret_word = choose_word(punctuations, words_file)
+    unCasedSecret = secret_word
     guessed_letters = []
     attempts = random.randint(3, 9)
 
+    secret_word = secret_word.lower()
     while attempts > 0:
         current_display = display_word(secret_word, guessed_letters)
         print("Current word:", current_display)
@@ -61,6 +103,8 @@ def hangman(punctuations, words_file):
         print("Attempts left:", attempts)
 
         guess = input("Guess a letter: ").lower()
+        if not caseSensitive:
+            guess = guess.lower()
 
         if guess.isalpha() and len(guess) == 1:
             if guess in guessed_letters:
@@ -76,12 +120,17 @@ def hangman(punctuations, words_file):
             print("Please enter a valid single letter.")
 
         if "_" not in display_word(secret_word, guessed_letters):
-            return True, secret_word
+            return True, unCasedSecret
 
-    return False, secret_word
+    return False, unCasedSecret
 
 
 def file_on_line(directory=os.path.expanduser("~")) -> str:
+    """
+
+    :param directory: Default value = os.path.expanduser("~"))
+
+    """
     directory = os.path.abspath(directory)
     while True:
         try:
@@ -101,12 +150,18 @@ def file_on_line(directory=os.path.expanduser("~")) -> str:
             else:
                 return ""
         except PermissionError:
-            print_warning("Error: Permission denied while accessing the directory.")
+            print_warning(
+                "Error: Permission denied while accessing the directory.")
             exit(1)
 
 
 # Use with caution!
 def hang_the_file(filelocation):
+    """
+
+    :param filelocation: The path where the file is stored
+
+    """
     try:
         os.remove(filelocation)
         print(f"Hanged {filelocation}!")
@@ -116,8 +171,7 @@ def hang_the_file(filelocation):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="HangFile is a fun game that hangs your file if you lose"
-    )
+        description="HangFile is a fun game that hangs your file if you lose")
     parser.add_argument(
         "-p",
         "--punctuation",
@@ -144,6 +198,13 @@ if __name__ == "__main__":
         action="store_true",
         help="Remove/Hang the file (Permanent data loss)",
     )
+    parser.add_argument(
+        "-c",
+        "--case",
+        default=False,
+        action="store_true",
+        help="Don't make the game case insensitive",
+    )
 
     args = parser.parse_args()
 
@@ -152,9 +213,9 @@ if __name__ == "__main__":
         exit(1)
 
     if args.directory and not os.path.isdir(expandvars(args.directory)):
-        print_warning(
-            (f"Error: Specified directory '{expandvars(args.directory)}' not found")
-        )
+        print_warning((
+            f"Error: Specified directory '{expandvars(args.directory)}' not found"
+        ))
         exit(1)
 
     hang_file = file_on_line(expandvars(args.directory))
@@ -164,9 +225,10 @@ if __name__ == "__main__":
     )
     print_info(f"Remember, '{hang_file}' will be hanged if you lose!")
 
-    res, secret = hangman(args.punctuation, args.file)
+    res, secret = hangman(args.punctuation, args.file, args.case)
     if res:
-        print_success(f"You got it! '{hang_file}' {secret} is spared from the rope!")
+        print_success(
+            f"You got it! '{hang_file}' {secret} is spared from the rope!")
     else:
         print_warning(
             f"Sorry to announce that the word was '{secret}' and '{hang_file}' will face the rope!"
