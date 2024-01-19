@@ -150,7 +150,8 @@ def file_on_line(directory=os.path.expanduser("~")) -> str:
             else:
                 return ""
         except PermissionError:
-            print_warning("Error: Permission denied while accessing the directory.")
+            print_warning(
+                "Error: Permission denied while accessing the directory.")
             exit(1)
 
 
@@ -170,8 +171,7 @@ def hang_the_file(filelocation):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="HangFile is a fun game that hangs your file if you lose"
-    )
+        description="HangFile is a fun game that hangs your file if you lose")
     parser.add_argument(
         "-p",
         "--punctuation",
@@ -213,9 +213,9 @@ if __name__ == "__main__":
         exit(1)
 
     if args.directory and not os.path.isdir(expandvars(args.directory)):
-        print_warning(
-            (f"Error: Specified directory '{expandvars(args.directory)}' not found")
-        )
+        print_warning((
+            f"Error: Specified directory '{expandvars(args.directory)}' not found"
+        ))
         exit(1)
 
     hang_file = file_on_line(expandvars(args.directory))
@@ -227,7 +227,8 @@ if __name__ == "__main__":
 
     res, secret = hangman(args.punctuation, args.file, args.case)
     if res:
-        print_success(f"You got it! '{hang_file}' {secret} is spared from the rope!")
+        print_success(
+            f"You got it! '{hang_file}' {secret} is spared from the rope!")
     else:
         print_warning(
             f"Sorry to announce that the word was '{secret}' and '{hang_file}' will face the rope!"
