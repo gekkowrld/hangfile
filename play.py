@@ -41,8 +41,8 @@ def print_success(message):
 def choose_word(punctuations=False, words_file="words.txt"):
     """
 
-    :param punctuations:  (Default value = False)
-    :param words_file:  (Default value = "words.txt")
+    :param punctuations: Default value = False)
+    :param words_file: Default value = "words.txt")
 
     """
     try:
@@ -127,7 +127,7 @@ def hangman(punctuations, words_file, caseSensitive):
 def file_on_line(directory=os.path.expanduser("~")) -> str:
     """
 
-    :param directory:  (Default value = os.path.expanduser("~"))
+    :param directory: Default value = os.path.expanduser("~"))
 
     """
     directory = os.path.abspath(directory)
