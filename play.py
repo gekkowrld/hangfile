@@ -110,8 +110,7 @@ def file_on_line(directory=os.path.expanduser("~")) -> str:
             else:
                 return ""
         except PermissionError:
-            print_warning(
-                "Error: Permission denied while accessing the directory.")
+            print_warning("Error: Permission denied while accessing the directory.")
             exit(1)
 
 
@@ -154,9 +153,13 @@ if __name__ == "__main__":
         action="store_true",
         help="Remove/Hang the file (Permanent data loss)",
     )
-    parser.add_argument("-c", "--case", default=False,
-                        action="store_true",
-                        help="Don't make the game case insensitive",)
+    parser.add_argument(
+        "-c",
+        "--case",
+        default=False,
+        action="store_true",
+        help="Don't make the game case insensitive",
+    )
 
     args = parser.parse_args()
 
@@ -179,8 +182,7 @@ if __name__ == "__main__":
 
     res, secret = hangman(args.punctuation, args.file, args.case)
     if res:
-        print_success(
-            f"You got it! '{hang_file}' {secret} is spared from the rope!")
+        print_success(f"You got it! '{hang_file}' {secret} is spared from the rope!")
     else:
         print_warning(
             f"Sorry to announce that the word was '{secret}' and '{hang_file}' will face the rope!"
