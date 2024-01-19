@@ -3,7 +3,8 @@ import linecache
 import os
 import random
 import string
-from os.path import expanduser, expandvars
+from os.path import expanduser
+from os.path import expandvars
 
 RED = "\033[91m"
 YELLOW = "\033[93m"
