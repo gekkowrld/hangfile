@@ -15,7 +15,7 @@ RESET = "\033[0m"
 def print_warning(message):
     """
 
-    :param message: 
+    :param message:
 
     """
     print(f"{RED}Warning: {message}{RESET}")
@@ -24,7 +24,7 @@ def print_warning(message):
 def print_info(message):
     """
 
-    :param message: 
+    :param message:
 
     """
     print(f"{YELLOW}Info: {message}{RESET}")
@@ -33,7 +33,7 @@ def print_info(message):
 def print_success(message):
     """
 
-    :param message: 
+    :param message:
 
     """
     print(f"{GREEN}Success: {message}{RESET}")
@@ -69,8 +69,8 @@ def choose_word(punctuations=False, words_file="words.txt"):
 def display_word(word, guessed_letters):
     """
 
-    :param word: 
-    :param guessed_letters: 
+    :param word:
+    :param guessed_letters:
 
     """
     display = ""
@@ -85,9 +85,9 @@ def display_word(word, guessed_letters):
 def hangman(punctuations, words_file, caseSensitive):
     """
 
-    :param punctuations: 
-    :param words_file: 
-    :param caseSensitive: 
+    :param punctuations:
+    :param words_file:
+    :param caseSensitive:
 
     """
     secret_word = choose_word(punctuations, words_file)
@@ -158,7 +158,7 @@ def file_on_line(directory=os.path.expanduser("~")) -> str:
 def hang_the_file(filelocation):
     """
 
-    :param filelocation: 
+    :param filelocation:
 
     """
     try:
